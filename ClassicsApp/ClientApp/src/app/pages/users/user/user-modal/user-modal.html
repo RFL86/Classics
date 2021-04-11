@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <h4 class="modal-title">Editar Usuário</h4>
+  <button type="button" class="close" aria-hidden="true" (click)="close()">×</button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>{{userNameInput}}</h3>
+    </div>
+      <div class="col-md-12">
+        <label class="col-form-label">Selecione o perfil</label>
+        <ng-select [clearable]="false" [(ngModel)]="selectedProfile" (ngModelChange)="onSelectProfile(selectedProfile)">
+          <ng-option *ngFor="let item of profilesList" bindLabel="item.text"
+                     bindValue="item.value" [value]="item">{{item.text}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="col-md-12">
+        <label class="col-form-label">Selecione o status</label>
+        <ng-select [clearable]="false" [(ngModel)]="selectedStatus" (ngModelChange)="onSelectStatus(selectedStatus)">
+          <ng-option *ngFor="let item of statusList" bindLabel="item.text"
+                     bindValue="item.value" [value]="item">{{item.text}}</ng-option>
+        </ng-select>
+      </div>
+    </div>
+    <div class="col-md-12 mt-2">
+      <ngb-alert type="success" class="alert alert-primary text-success" *ngIf="showSuccessMessage">
+        {{successMessage}}
+      </ngb-alert>
+      <ngb-alert type="warning" class="alert alert-warning text-warning" *ngIf="showErrorMessage">
+        {{errorMessage}}
+      </ngb-alert>
+    </div>
+  </div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light waves-effect" data-dismiss="modal" (click)="close()">Fechar</button>
+  <button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal" (click)="editUser()">Salvar</button>
+</div>

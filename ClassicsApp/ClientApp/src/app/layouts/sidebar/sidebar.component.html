@@ -1,0 +1,97 @@
+<!-- ========== Left Sidebar Start ========== -->
+<ng-template #contentTemplate>
+  <!--- Sidemenu -->
+  <div id="sidebar-menu">
+    <ul class="metismenu" id="side-menu" #sideMenu>
+
+      <li class="menu-title">Navegação</li>
+
+      <li>
+        <a href="javascript: void(0);" class="waves-effect">
+          <i class=" remixicon-store-3-fill"></i>
+          <span> Início </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <ul class="nav-second-level" aria-expanded="false">
+          <li>
+            <a [routerLink]="['/store']" class="side-nav-link-ref" routerLinkActive="active">Anuncios</a>
+          </li>
+          <li>
+            <a [routerLink]="['/sup']" class="side-nav-link-ref" routerLinkActive="active">Fornecedores</a>
+          </li>
+        </ul>
+      </li>
+      <li *ngIf="permission == '0' || permission == '1' || permission == '2'">
+        <a href="javascript: void(0);" class="waves-effect">
+          <i class="remixicon-account-circle-line"></i>
+          <span> Minha Conta </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <ul class="nav-second-level" aria-expanded="false">
+          <li>
+            <a [routerLink]="['/user-alert']" class="side-nav-link-ref" routerLinkActive="active">Alertas</a>
+          </li>
+          <li>
+            <a [routerLink]="['/product']" class="side-nav-link-ref" routerLinkActive="active">Meus Anúncios</a>
+          </li>
+          <li>
+            <a [routerLink]="['/mycar']" class="side-nav-link-ref" routerLinkActive="active">Meus Carros</a>
+          </li>
+          <li>
+            <a [routerLink]="['/account']" class="side-nav-link-ref" routerLinkActive="active">Dados Pessoais</a>
+          </li>
+        </ul>
+      </li>
+      <li *ngIf="permission == '1' || permission == '2'">
+        <a href="javascript: void(0);" class="waves-effect">
+          <i class="remixicon-settings-4-line"></i>
+          <span> Cadastros Gerais </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <ul class="nav-second-level" aria-expanded="false">
+          <li>
+            <a [routerLink]="['/management']" class="side-nav-link-ref" routerLinkActive="active">Gerenciar Anúncios</a>
+          </li>
+          <li>
+            <a [routerLink]="['/alert']" class="side-nav-link-ref" routerLinkActive="active">Central de Alertas</a>
+          </li>
+          <li>
+            <a [routerLink]="['/supplier']" class="side-nav-link-ref" routerLinkActive="active">Fornecedores</a>
+          </li>
+          <li>
+            <a [routerLink]="['/car']" class="side-nav-link-ref" routerLinkActive="active">Modelos de Carro</a>
+          </li>
+          <li *ngIf="permission == '2'">
+            <a [routerLink]="['/user']" class="side-nav-link-ref" routerLinkActive="active">Permissões</a>
+          </li>
+          <li *ngIf="permission == '2'">
+            <a [routerLink]="['/chart']" class="side-nav-link-ref" routerLinkActive="active">Gráficos</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a [routerLink]="['/login']" class="waves-effect" aria-expanded="false">
+          <i class="remixicon-login-circle-line"></i>
+          <span> Login/Cadastro </span>
+        </a>
+      </li>
+    </ul>
+
+  </div>
+  <!-- End Sidebar -->
+  <div class="clearfix"></div>
+</ng-template>
+
+
+<div class="left-side-menu">
+
+  <div class="slimscroll-menu" appSlimScroll *ngIf="!isCondensed">
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </div>
+
+  <div class="slimscroll-menu" *ngIf="isCondensed">
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </div>
+
+</div>
+<!-- Left Sidebar End -->

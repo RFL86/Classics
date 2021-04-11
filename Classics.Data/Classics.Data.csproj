@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B9F169F0-1A32-4E36-826F-D92944F69775}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Classics.Data</RootNamespace>
+    <AssemblyName>Classics.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Configuration.ConfigurationManager.4.7.0\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.AccessControl, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.5.0.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Permissions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Permissions.5.0.0\lib\net461\System.Security.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Enums\Alert.cs" />
+    <Compile Include="Enums\BlobFile.cs" />
+    <Compile Include="Enums\Brand.cs" />
+    <Compile Include="Enums\CarModel.cs" />
+    <Compile Include="Enums\MyCar.cs" />
+    <Compile Include="Enums\Product.cs" />
+    <Compile Include="Enums\Profile.cs" />
+    <Compile Include="Enums\Serie.cs" />
+    <Compile Include="Enums\Supplier.cs" />
+    <Compile Include="Enums\User.cs" />
+    <Compile Include="Enums\UserAlert.cs" />
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\Alert.cs" />
+    <Compile Include="Models\BlobFile.cs" />
+    <Compile Include="Models\Brand.cs" />
+    <Compile Include="Models\CarModel.cs" />
+    <Compile Include="Models\Mapping\AddressMap.cs" />
+    <Compile Include="Models\Mapping\AlertMap.cs" />
+    <Compile Include="Models\Mapping\BlobFileMap.cs" />
+    <Compile Include="Models\Mapping\BrandMap.cs" />
+    <Compile Include="Models\Mapping\CarModelMap.cs" />
+    <Compile Include="Models\Mapping\MyCarMap.cs" />
+    <Compile Include="Models\Mapping\ProductMap.cs" />
+    <Compile Include="Models\Mapping\ProfileMap.cs" />
+    <Compile Include="Models\Mapping\SerieMap.cs" />
+    <Compile Include="Models\Mapping\SupplierMap.cs" />
+    <Compile Include="Models\Mapping\SystemLogMap.cs" />
+    <Compile Include="Models\Mapping\SystemLogTableMap.cs" />
+    <Compile Include="Models\Mapping\UserAlertMap.cs" />
+    <Compile Include="Models\Mapping\UserMap.cs" />
+    <Compile Include="Models\MyCar.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Profile.cs" />
+    <Compile Include="Models\ClassicsContext.cs" />
+    <Compile Include="Models\ClassicsContextLog.cs" />
+    <Compile Include="Models\Serie.cs" />
+    <Compile Include="Models\Supplier.cs" />
+    <Compile Include="Models\SystemLog.cs" />
+    <Compile Include="Models\SystemLogTable.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserAlert.cs" />
+    <Compile Include="ObjectValue\SystemLog.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AddressRepository\AddressRepository.cs" />
+    <Compile Include="Repository\AddressRepository\IAddressRepository.cs" />
+    <Compile Include="Repository\AlertRepository\AlertRepository.cs" />
+    <Compile Include="Repository\AlertRepository\IAlertRepository.cs" />
+    <Compile Include="Repository\BlobFileRepository\IBlobFileRepository.cs" />
+    <Compile Include="Repository\BlobFileRepository\BlobFileRepository.cs" />
+    <Compile Include="Repository\BrandRepository\BrandRepository.cs" />
+    <Compile Include="Repository\BrandRepository\IBrandRepository.cs" />
+    <Compile Include="Repository\CarModelRepository\CarModelRepository.cs" />
+    <Compile Include="Repository\CarModelRepository\ICarModelRepository.cs" />
+    <Compile Include="Repository\MyCarRepository\MyCarRepository.cs" />
+    <Compile Include="Repository\MyCarRepository\IMyCarRepository.cs" />
+    <Compile Include="Repository\ProductRepository\IProductRepository.cs" />
+    <Compile Include="Repository\ProductRepository\ProductRepository.cs" />
+    <Compile Include="Repository\ProfileRepository\IProfileRepository.cs" />
+    <Compile Include="Repository\ProfileRepository\ProfileRepository.cs" />
+    <Compile Include="Repository\SerieRepository\ISerieRepository.cs" />
+    <Compile Include="Repository\SerieRepository\SerieRepository.cs" />
+    <Compile Include="Repository\SupplierRepository\ISupplierRepository.cs" />
+    <Compile Include="Repository\SupplierRepository\SupplierRepository.cs" />
+    <Compile Include="Repository\UserAlertRepository\IUserAlertRepository.cs" />
+    <Compile Include="Repository\UserAlertRepository\UserAlertRepository.cs" />
+    <Compile Include="Repository\UserRepository\IUserRepository.cs" />
+    <Compile Include="Repository\UserRepository\UserRepository.cs" />
+    <Compile Include="Repository\_Base\IRepositoryBase.cs" />
+    <Compile Include="Repository\_Base\RepositoryBase.cs" />
+    <Compile Include="Services\ChangeTrackerService\ChangeTrackerService.cs" />
+    <Compile Include="Services\ChangeTrackerService\IChangeTrackerService.cs" />
+    <Compile Include="Services\DatabaseService\DatabaseService.cs" />
+    <Compile Include="Services\DatabaseService\IDatabaseService.cs" />
+    <Compile Include="Services\SystemLogService\ISystemLogService.cs" />
+    <Compile Include="Services\SystemLogService\SystemLogService.cs" />
+    <Compile Include="UnitOfWork\BaseUnitOfWork.cs" />
+    <Compile Include="UnitOfWork\IBaseUnitOfWork.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Classics.Infra\Classics.Infra.csproj">
+      <Project>{3c5e445a-1559-47bc-933c-f3e19836df1f}</Project>
+      <Name>Classics.Infra</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

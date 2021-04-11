@@ -1,0 +1,208 @@
+<loader [loaderData]="loaderData"></loader>
+<div class="container-fluid">
+  <app-page-title title="Modelos de Carro" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 mb-3">
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a href="javascript:void(0)" (click)="changeTab('brands')" [ngClass]="{'active' : activeTab == 'brands'}" data-toggle="tab" aria-expanded="false" class="nav-link ">
+                    <span class="d-none d-sm-inline-block">Marcas</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="javascript:void(0)" (click)="changeTab('models')" [ngClass]="{'active' : activeTab == 'models'}" data-toggle="tab" aria-expanded="false" class="nav-link ">
+                    <span class="d-none d-sm-inline-block">Modelos</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="javascript:void(0)" (click)="changeTab('series')" [ngClass]="{'active' : activeTab == 'series'}" data-toggle="tab" aria-expanded="false" class="nav-link ">
+                    <span class="d-none d-sm-inline-block">Séries</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-12 hidden" [ngClass]="{'show' : activeTab == 'brands'}">
+              <div class="col-md-3">
+                <label class="d-inline-flex align-items-center">
+                  Nova Marca
+                </label>
+                <div class="input-group">
+                  <input type="text" class="form-control" aria-describedby="basic-addon2" [(ngModel)]="newBrand" maxlength="25" >
+                  <div class="input-group-append">
+                    <button class="btn btn-primary waves-effect waves-light" type="button" (click)="addBrand()">Criar</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <ngb-alert type="success" class="alert alert-primary text-success" *ngIf="showSuccessMessage">
+                  {{successMessage}}
+                </ngb-alert>
+                <ngb-alert type="warning" class="alert alert-primary text-warning" *ngIf="showErrorMessage">
+                   {{errorMessage}}
+                </ngb-alert>
+              </div>
+              <div class="table-responsive ">
+                <table class="table mt-4 table-centered">
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Criação</th>
+                      <th>Status</th>
+                      <th style="width: 10%" class="text-right">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let tb of brandsTable">
+                      <td><p class="info-itens">{{tb?.name}}</p></td>
+                      <td><p class="info-itens">{{tb?.createdOn | date:'dd/MM/yyyy HH:mm'}}</p></td>
+                      <td>
+                        <p class="info-itens" *ngIf="tb?.status == 0">Inativo</p>
+                        <p class="info-itens" *ngIf="tb?.status == 1">Ativo</p>
+                      </td>
+                      <td>
+                        <button class="btn btn-primary btn-sm waves-effect waves-light" (click)="showEditBrandModal(tb?.brandId, tb?.status, tb?.name)"type="submit">
+                          Editar
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-12 hidden" [ngClass]="{'show' : activeTab == 'models'}">
+              <div class="row">
+                <div class="col-md-3">
+                  <label class="d-inline-flex align-items-center">
+                    Marca
+                  </label>
+                  <ng-select [clearable]="false" [items]="brandsList" bindLabel="text" bindValue="value" [multiple]="false" [(ngModel)]="selectedBrand" (ngModelChange)="onSelectBrand(selectedBrand)"></ng-select>
+                </div>
+                <div class="col-md-3">
+                  <label class="d-inline-flex align-items-center">
+                    Novo Modelo
+                  </label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" aria-describedby="basic-addon2" [(ngModel)]="newModel" maxlength="25">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary waves-effect waves-light" type="button" (click)="addModel()">Criar</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <ngb-alert type="success" class="alert alert-primary text-success mt-3" *ngIf="showSuccessMessage">
+                    {{successMessage}}
+                  </ngb-alert>
+                  <ngb-alert type="warning" class="alert alert-primary text-warning mt-3" *ngIf="showErrorMessage">
+                    {{errorMessage}}
+                  </ngb-alert>
+                </div>
+              </div>
+              <div class="table-responsive ">
+                <table class="table mt-4 table-centered">
+                  <thead>
+                    <tr>
+                      <th>Marca</th>
+                      <th>Modelo</th>
+                      <th>Criação</th>
+                      <th>Status</th>
+                      <th style="width: 10%" class="text-right">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let tb of modelsTable">
+                      <td><p class="info-itens">{{tb?.brand}}</p></td>
+                      <td><p class="info-itens">{{tb?.name}}</p></td>
+                      <td><p class="info-itens">{{tb?.createdOn | date:'dd/MM/yyyy HH:mm'}}</p></td>
+                      <td>
+                        <p class="info-itens" *ngIf="tb?.status == 0">Inativo</p>
+                        <p class="info-itens" *ngIf="tb?.status == 1">Ativo</p>
+                      </td>
+                      <td>
+                        <button class="btn btn-primary btn-sm waves-effect waves-light" (click)="showEditModelModal(tb?.modelId, tb?.status, tb?.name)" type="submit">
+                          Editar
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-12 hidden" [ngClass]="{'show' : activeTab == 'series'}">
+              <div class="row">
+                <div class="col-md-3">
+                  <label class="d-inline-flex align-items-center">
+                    Marca
+                  </label>
+                  <ng-select [clearable]="false" [items]="brandsList" bindLabel="text" bindValue="value" [multiple]="false" [(ngModel)]="selectedBrand" (ngModelChange)="getModelsByBrandId(selectedBrand)"></ng-select>
+                </div>
+                <div class="col-md-3">
+                  <label class="d-inline-flex align-items-center">
+                    Modelo
+                  </label>
+                  <ng-select [clearable]="false" [items]="modelsList" bindLabel="text" bindValue="value" [multiple]="false" [(ngModel)]="selectedModel" (ngModelChange)="onSelectModel(selectedModel)"></ng-select>
+                </div>
+                <div class="col-md-3">
+                  <label class="d-inline-flex align-items-center">
+                    Nova Série
+                  </label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" aria-describedby="basic-addon2" [(ngModel)]="newSerie" maxlength="25">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary waves-effect waves-light" type="button" (click)="addSerie()">Criar</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <ngb-alert type="success" class="alert alert-primary text-success mt-3" *ngIf="showSuccessMessage">
+                    {{successMessage}}
+                  </ngb-alert>
+                  <ngb-alert type="warning" class="alert alert-primary text-warning mt-3" *ngIf="showErrorMessage">
+                    {{errorMessage}}
+                  </ngb-alert>
+                </div>
+              </div>
+              <div class="table-responsive ">
+                <table class="table mt-4 table-centered">
+                  <thead>
+                    <tr>
+                      <th>Marca</th>
+                      <th>Modelo</th>
+                      <th>Série</th>
+                      <th>Criação</th>
+                      <th>Status</th>
+                      <th style="width: 10%" class="text-right">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let tb of seriesTable">
+                      <td><p class="info-itens">{{tb?.brand}}</p></td>
+                      <td><p class="info-itens">{{tb?.model}}</p></td>
+                      <td><p class="info-itens">{{tb?.name}}</p></td>
+                      <td><p class="info-itens">{{tb?.createdOn | date:'dd/MM/yyyy HH:mm'}}</p></td>
+                      <td>
+                        <p class="info-itens" *ngIf="tb?.status == 0">Inativo</p>
+                        <p class="info-itens" *ngIf="tb?.status == 1">Ativo</p>
+                      </td>
+                      <td>
+                        <button class="btn btn-primary btn-sm waves-effect waves-light" (click)="showEditSerieModal(tb?.serieId, tb?.status, tb?.name)" type="submit">
+                          Editar
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

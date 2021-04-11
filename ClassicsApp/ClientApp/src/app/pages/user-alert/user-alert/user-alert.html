@@ -1,0 +1,41 @@
+<loader [loaderData]="loaderData"></loader>
+<div class="container-fluid">
+  <app-page-title title="Alertas" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-9">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title">Mensagens de Alerta</h4>       
+          <div class="table-responsive ">
+            <table class="table mt-4 table-centered">
+              <thead>
+                <tr>
+                  <th>Data da Criação</th>
+                  <th>Assunto</th>
+                  <th>Mensagem</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tb of data">
+                  <td><p class="info-itens">{{tb?.createdOn | date:'dd/MM/yyyy HH:mm'}}</p></td>
+                  <td><p class="info-itens">{{tb?.subject}}</p></td>
+                  <td><p class="info-itens">{{tb?.shortMessage}}</p></td>
+                  <td><p class="info-itens">{{tb?.status}}</p></td>
+                  <td>
+                    <button class="btn btn-primary btn-sm waves-effect waves-light"
+                            (click)="showAlertModal(tb?.userAlertId, tb?.subject, tb?.message)" type="submit">
+                      Ver
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

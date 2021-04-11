@@ -1,0 +1,44 @@
+<div class="modal-header">
+  <h4 class="modal-title">Mensagem de Alerta</h4>
+  <button type="button" class="close" aria-hidden="true" (click)="close()">×</button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <label class="d-inline-flex align-items-center">
+        Assunto
+      </label>
+      <div class="input-group">
+        <input type="text" class="form-control" aria-describedby="basic-addon2"
+               required minlength="14" [(ngModel)]="subject" maxlength="40">
+      </div>
+    </div>
+    <div class="col-md-12">
+      <label class="d-inline-flex align-items-center">
+        Mensagem
+      </label>
+      <div class="input-group">
+        <textarea class="form-control" aria-describedby="basic-addon2" [(ngModel)]="message" rows="5" maxlength="400" required minlength="20"></textarea>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <label class="col-form-label">Destinatários</label>
+      <ng-select [clearable]="false" [(ngModel)]="selectedReceiver" (ngModelChange)="onSelectReceiver(selectedReceiver)">
+        <ng-option *ngFor="let item of receiversList" bindLabel="item.text"
+                   bindValue="item.value" [value]="item">{{item.text}}</ng-option>
+      </ng-select>
+    </div>
+  </div>
+  <div class="col-md-12 mt-2">
+    <ngb-alert type="success" class="alert alert-primary text-success" *ngIf="showSuccessMessage">
+      {{successMessage}}
+    </ngb-alert>
+    <ngb-alert type="warning" class="alert alert-warning text-warning" *ngIf="showErrorMessage">
+      {{errorMessage}}
+    </ngb-alert>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light waves-effect" data-dismiss="modal" (click)="close()">Fechar</button>
+  <button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal" (click)="save()">Salvar</button>
+</div>

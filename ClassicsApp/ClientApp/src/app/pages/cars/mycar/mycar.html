@@ -1,0 +1,94 @@
+<loader [loaderData]="loaderData"></loader>
+<div class="container-fluid">
+  <app-page-title title="Meus Carros" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="header-title mb-3">Cadastrar Novo Carro</h4>
+                  <div class="col-md-12">
+                    <label class="d-inline-flex align-items-center">
+                      Marca
+                    </label>
+                    <ng-select [clearable]="false" [items]="brandsList" bindLabel="text" bindValue="value" [multiple]="false" [(ngModel)]="selectedBrand" (ngModelChange)="getModelsByBrandId(selectedBrand)"></ng-select>
+                  </div>
+                  <div class="col-md-12">
+                    <label class="d-inline-flex align-items-center">
+                      Modelo
+                    </label>
+                    <ng-select [clearable]="false" [items]="modelsList" bindLabel="text" bindValue="value" [multiple]="false" [(ngModel)]="selectedModel" (ngModelChange)="onSelectModel(selectedModel)"></ng-select>
+                  </div>
+                  <div class="col-md-12">
+                    <label class="d-inline-flex align-items-center">
+                      Série
+                    </label>
+                    <ng-select [clearable]="false" [items]="serieList" bindLabel="text" bindValue="value" [multiple]="false" [(ngModel)]="selectedSerie"
+                               (ngModelChange)="onSelectSerie(selectedSerie)"></ng-select>
+                  </div>
+                  <div class="col-md-12">
+                    <label class="d-inline-flex align-items-center">
+                      Nome
+                    </label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" aria-describedby="basic-addon2" [(ngModel)]="name" maxlength="25">
+                      <div class="input-group-append">
+                        <button class="btn btn-primary waves-effect waves-light" type="button" (click)="addCar()">Criar</button>
+                      </div>
+                    </div>
+                    <ngb-alert type="success" class="alert alert-primary text-success mt-3" *ngIf="showSuccessMessage">
+                      {{successMessage}}
+                    </ngb-alert>
+                    <ngb-alert type="warning" class="alert alert-primary text-warning mt-3" *ngIf="showErrorMessage">
+                      {{errorMessage}}
+                    </ngb-alert>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-9">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="header-title">Meus Carros</h4>
+                  <div class="table-responsive ">
+                    <table class="table mt-4 table-centered">
+                      <thead>
+                        <tr>
+                          <th>Nome</th>
+                          <th>Marca</th>
+                          <th>Modelo</th>
+                          <th>Série</th>
+                          <th>Ações</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let tb of myCarsTable">
+                          <td><p class="info-itens">{{tb?.nickName}}</p></td>
+                          <td><p class="info-itens">{{tb?.brandName}}</p></td>
+                          <td><p class="info-itens">{{tb?.modelName}}</p></td>
+                          <td><p class="info-itens">{{tb?.serieName}}</p></td>
+                          <td>
+                            <button class="btn btn-primary btn-sm waves-effect waves-light" (click)="showEditMyCarModal(tb?.myCarId, tb?.nickName)" type="submit">
+                              Editar
+                            </button>
+                            <button class="btn btn-purple btn-outline btn-sm waves-effect waves-light ml-1" type="submit">
+                              Tudo para meu {{tb?.modelName}}
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

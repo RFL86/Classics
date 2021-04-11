@@ -1,0 +1,49 @@
+<loader [loaderData]="loaderData"></loader>
+<div class="container-fluid">
+  <app-page-title title="Alertas" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-9">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title">Gerenciamento de Alertas</h4>
+          <div class="row">
+            <div class="col-md-4 mt-4">
+              <button class="btn btn-primary btn-sm waves-effect waves-light"
+                      (click)="showCreateAlertModal()" type="submit">
+                Novo Alerta
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive ">
+            <table class="table mt-4 table-centered">
+              <thead>
+                <tr>
+                  <th>Data da Criação</th>
+                  <th>Criador</th>
+                  <th>Assunto</th>
+                  <th>Mensagem</th>
+                  <th>Destinatários</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tb of data">
+                  <td><p class="info-itens">{{tb?.createdOn | date:'dd/MM/yyyy HH:mm'}}</p></td>
+                  <td><p class="info-itens">{{tb?.createdBy}}</p></td>
+                  <td><p class="info-itens">{{tb?.subject}}</p></td>
+                  <td><p class="info-itens" ngbTooltip="{{tb?.message}}">{{tb?.shortMessage}}</p></td>
+                  <td><p class="info-itens">{{tb?.receiver}}</p></td>
+                  <td>
+                    <ui-switch defaultBoColor="#dfdfdf" size="small" color="#00b19d" [checked]="tb?.statusValue == 1 ? true : false"
+                               (change)="changeAlertStatus(tb?.statusValue, tb?.alertId) "></ui-switch>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

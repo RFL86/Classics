@@ -1,0 +1,82 @@
+<loader [loaderData]="loaderData"></loader>
+<div class="container-fluid">
+  <app-page-title title="Gráficos" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="card">
+    <div class="card-body">
+      <div class="row mb-2">
+        <div class="col-md-3 mt-2">
+          <button class="btn btn-success waves-effect waves-light btn-block" (click)="generatePDF()" type="submit">
+            Imprimir
+          </button>
+        </div>
+      </div>
+      <div id="contentToConvert">
+        <div class="row">
+          <div class="col-xl-4">
+            <app-portlet title="Anúncios por Staus" (onContentRefresh)="contentRefresh()" color="white"
+                         headerClass="header-title h4 border-0 my-1">
+              <div class="card-body pt-0">
+                <apx-chart [series]="productStatusChart.series" [chart]="productStatusChart.chart" [labels]="productStatusChart.labels"
+                           [dataLabels]="productStatusChart.dataLabels" [legend]="productStatusChart.legend" [colors]="productStatusChart.colors"
+                           [responsive]="productStatusChart.responsive">
+                </apx-chart>
+              </div>
+            </app-portlet>
+          </div>
+          <div class="col-xl-4">
+            <app-portlet title="Status dos Alertas Enviados" (onContentRefresh)="contentRefresh()" color="white"
+                         headerClass="header-title h4 border-0 my-1">
+              <div class="card-body pt-0">
+                <apx-chart [series]="alertReadingStatusChart.series" [chart]="alertReadingStatusChart.chart" [labels]="alertReadingStatusChart.labels"
+                           [dataLabels]="alertReadingStatusChart.dataLabels" [legend]="alertReadingStatusChart.legend" [colors]="alertReadingStatusChart.colors"
+                           [responsive]="alertReadingStatusChart.responsive">
+                </apx-chart>
+              </div>
+            </app-portlet>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4">
+            <app-portlet title="Carros dos Usuários por Marca" (onContentRefresh)="contentRefresh()" color="white"
+                         headerClass="header-title h4 border-0 my-1">
+              <div class="card-body pt-0">
+                <apx-chart [series]="carsByBrand.series" [chart]="carsByBrand.chart"
+                           [dataLabels]="carsByBrand.dataLabels" [labels]="carsByBrand.labels"
+                           [legend]="carsByBrand.legend" [colors]="carsByBrand.colors"
+                           [responsive]="carsByBrand.responsive" [fill]="carsByBrand.fill">
+                </apx-chart>
+              </div>
+            </app-portlet>
+          </div>
+
+          <div class="col-xl-4">
+            <app-portlet title="Anúncios por Estado" (onContentRefresh)="contentRefresh()" color="white"
+                         headerClass="header-title h4 border-0 my-1">
+              <div class="card-body pt-0">
+                <apx-chart [series]="productByState.series" [chart]="productByState.chart"
+                           [plotOptions]="productByState.plotOptions" [grid]="productByState.grid" [states]="productByState.states"
+                           [dataLabels]="productByState.dataLabels" [xaxis]="productByState.xaxis" [colors]="productByState.colors">
+                </apx-chart>
+
+              </div>
+            </app-portlet>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4">
+            <app-portlet title="Status dos Usuários" (onContentRefresh)="contentRefresh()" color="white"
+                         headerClass="header-title h4 border-0 my-1">
+              <div class="card-body pt-0">
+                <apx-chart [series]="usersStatus.series" [chart]="usersStatus.chart"
+                           [plotOptions]="usersStatus.plotOptions" [grid]="usersStatus.grid" [states]="usersStatus.states"
+                           [dataLabels]="usersStatus.dataLabels" [xaxis]="usersStatus.xaxis" [colors]="usersStatus.colors">
+                </apx-chart>
+              </div>
+            </app-portlet>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

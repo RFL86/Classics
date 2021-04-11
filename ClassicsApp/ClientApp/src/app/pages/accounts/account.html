@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <app-page-title title="Minha conta" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="card">
+    <div class="card-body">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="header-title mb-3">Meus dados</h4>
+            <div class="col-md-12">
+              <div class="col-md-12">
+                <label class="col-form-label">Nome</label>
+                <p class="info-itens">{{ user?.name }}</p>
+              </div>
+              <div class="col-md-12">
+                <label class="col-form-label">E-mail</label>
+                <p class="info-itens">{{ user?.email }}</p>
+              </div>
+              <div class="col-md-12">
+                <label class="col-form-label">Telefone</label>
+                <p class="info-itens">{{ user?.mobilePhone }}</p>
+              </div>
+              <div class="col-md-12">
+                <label class="col-form-label">Endereço</label>
+                <p class="info-itens">{{ user?.address }}</p>
+              </div>
+              <div class="col-md-12">
+                <button class="btn btn-purple waves-effect waves-light mt-3 btn-block"
+                        (click)="showEditUserModal(user?.name, user?.mobilePhone, user?.postalCode)" type="submit">
+                  Editar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

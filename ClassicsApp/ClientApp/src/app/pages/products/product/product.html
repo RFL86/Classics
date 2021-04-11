@@ -1,0 +1,59 @@
+<loader [loaderData]="loaderData"></loader>
+<div class="container-fluid">
+  <app-page-title title="Meus Anúncios" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title">Anúncios</h4>
+          <div class="row">
+            <div class="col-md-4 mt-4">
+              <button class="btn btn-primary btn-sm waves-effect waves-light"
+                      (click)="showCreateProductModal()" type="submit">
+                Novo Produto
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive ">
+            <table class="table mt-4 table-centered">
+              <thead>
+                <tr>
+                  <th>Titulo</th>
+                  <th>Descrição</th>
+                  <th>Preço</th>
+                  <th>Criação</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tb of productsTable">
+                  <td><p class="info-itens">{{tb?.title}}</p></td>
+                  <td><p class="info-itens" ngbTooltip="{{tb?.description}}">{{tb?.shortDescription}}</p></td>
+                  <td><p class="info-itens">{{tb?.price | currency:'BRL':'':'':'pt-BR'}}</p></td>
+                  <td><p class="info-itens">{{tb?.createdOn | date:'dd/MM/yyyy HH:mm'}}</p></td> 
+                  <td><p class="info-itens">{{tb?.status}}</p></td>
+                  <td>
+                    <button class="btn btn-purple btn-sm waves-effect waves-light"
+                            (click)="showEditPhotoModal(tb?.productId, tb?.photoUrl)" type="submit">
+                       Gerenciar Foto
+                    </button>
+                    <button class="btn btn-primary btn-sm waves-effect waves-light ml-2"
+                            (click)="showEditProductModal(tb?.productId, tb?.title, tb?.description, tb?.price, tb?.statusValue, tb?.carModelId)" type="submit">
+                      Editar
+                    </button>
+                    <button class="btn btn-pink btn-sm waves-effect waves-light ml-2"
+                            (click)="showDetailsModal(tb?.title, tb?.description, tb?.price, tb?.photoUrl, tb?.email, tb?.address, tb?.phone, tb?.carModel)" type="submit">
+                      Visualizar
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,43 @@
+<loader [loaderData]="loaderData"></loader>
+<div class="container-fluid">
+  <app-page-title title="Gerenciamento de Anúncios" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title">Anúncios</h4>         
+          <div class="table-responsive ">
+            <table class="table mt-4 table-centered">
+              <thead>
+                <tr>
+                  <th>Titulo</th>
+                  <th>Descrição</th>
+                  <th>Preço</th>
+                  <th>Criação</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tb of productsTable">
+                  <td><p class="info-itens">{{tb?.title}}</p></td>
+                  <td><p class="info-itens" ngbTooltip="{{tb?.description}}">{{tb?.shortDescription}}</p></td>
+                  <td><p class="info-itens">{{tb?.price | currency:'BRL':'':'':'pt-BR'}}</p></td>
+                  <td><p class="info-itens">{{tb?.createdOn | date:'dd/MM/yyyy HH:mm'}}</p></td>               
+                  <td><p class="info-itens">{{tb?.status}}</p></td>
+                  <td>                  
+                    <button class="btn btn-primary btn-sm waves-effect waves-light ml-2"
+                            (click)="showDetailsModal(tb?.productId, tb?.title, tb?.description, tb?.price, tb?.photoUrl, tb?.email, tb?.address, tb?.phone, tb?.carModel)" type="submit">
+                      Visualizar
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

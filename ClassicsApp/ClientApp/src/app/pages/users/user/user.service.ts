@@ -1,0 +1,41 @@
+import { Injectable, Inject } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: "root",
+})
+
+export class UserService {
+  private _baseUrl: string;
+  public _token: string;
+
+  constructor(private client: HttpClient, public _activatedRouter: ActivatedRoute ,private _router: Router, @Inject('BASE_URL')
+  baseUrl: string) {
+    this._baseUrl = baseUrl;
+
+    this.checkIfIsLogged(); 
+    this._token = 'Bearer ' + localStorage.getItem('token');
+  }
+
+  checkIfIsLogged() {
+    if (localStorage.getItem('token') == '' || localStorage.getItem('token') == null) {
+      this._router.navigate(['../store'], { relativeTo: this._activatedRouter })
+    }
+  }
+
+  public getUsers(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': this._token
+    });
+    return this.client.get<any>(this._baseUrl + 'api/User/GetUsers', { headers });
+  }
+
+  public editUser(formData: FormData): Observable<string> {
+    const response = this.client.post<string>(this._baseUrl + 'api/User/EditUser', formData, { responseType: 'text' as 'json' });
+    return response;
+  }
+
+}
+

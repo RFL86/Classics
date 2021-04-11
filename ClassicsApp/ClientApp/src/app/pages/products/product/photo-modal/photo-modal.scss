@@ -1,0 +1,28 @@
+.line {
+  float: left;
+  width: 100%;
+  word-break: break-all
+}
+
+.fix-file-button {
+  margin-top: 38px;
+}
+
+.invalid {
+  border: 1px solid #f1556c;
+}
+
+.hidden {
+  display: none
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.zero-px {
+  width: 0px !important;
+  height: 0px !important;
+  float: left;
+  display: none;
+}

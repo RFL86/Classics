@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h4 class="modal-title">Alerta</h4>
+  <button type="button" class="close" aria-hidden="true" (click)="close()">×</button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <label class="d-inline-flex align-items-center">
+        {{subject}}
+      </label>
+    </div>
+    <div class="col-md-12">
+      <p>{{message}}</p>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light waves-effect" data-dismiss="modal" (click)="close()">Fechar</button>
+</div>

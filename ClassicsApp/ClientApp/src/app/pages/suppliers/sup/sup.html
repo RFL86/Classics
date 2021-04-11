@@ -1,0 +1,41 @@
+<loader [loaderData]="loaderData"></loader>
+<div class="container-fluid">
+  <app-page-title title="Fornecedores" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title">Fornecedores</h4>
+          <div class="col-12">
+            <div class="table-responsive ">
+              <table class="table mt-4 table-centered">
+                <thead>
+                  <tr>
+                    <th>Fornecedor</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let tb of supTable">
+                    <td><p class="info-itens">{{tb?.title}}</p></td>
+                    <td><p class="info-itens">{{tb?.email}}</p></td>
+                    <td><p class="info-itens">{{tb?.phoneNumber}}</p></td>
+                    <td>
+                      <button class="btn btn-primary btn-sm waves-effect waves-light"
+                              (click)="showDetails(tb?.title, tb?.description, tb?.email, tb?.cnpj, tb?.phoneNumber, tb?.statusValue)" type="submit">
+                        Detalhes
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

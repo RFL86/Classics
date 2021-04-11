@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h4 class="modal-title">Foto do Produto</h4>
+  <button type="button" class="close" aria-hidden="true" (click)="close()">×</button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <label class="col-form-label">Pré Visualização</label>
+      <div class="embed-responsive embed-responsive-16by9">
+        <img [src]="imgURL" class="embed-responsive-item" *ngIf="showImage">
+        <img src="{{photoUrlInput}}" class="embed-responsive-item" *ngIf="!showImage">
+      </div>
+    </div>
+    <div class="col-12 d-flex justify-content-center mt-2">
+      <ngb-alert [dismissible]="false" type="info">
+        <strong>Atenção, ao inserir uma nova foto, a foto atual será substituída.</strong>
+      </ngb-alert>
+    </div>
+    <div class="col-md-12 mt-2">
+      <ngb-alert type="success" class="alert alert-primary text-success" *ngIf="showSuccessMessage">
+        {{successMessage}}
+      </ngb-alert>
+      <ngb-alert type="warning" class="alert alert-warning text-warning" *ngIf="showErrorMessage">
+        {{errorMessage}}
+      </ngb-alert>
+    </div> 
+    <div class="col-12 d-flex justify-content-center">
+      <button type="button" class="btn btn-danger waves-effect waves-light fix-file-button mr-2" (click)="removePhoto()">Remover</button>
+      <button type="button" class="btn btn-purple waves-effect waves-light fix-file-button" (click)="FileInputs.click()">Selecionar Arquivo</button>
+      <input type="file" accept="image/*" [(ngModel)]="fileInput" (change)="getFileDetails($event)" class="zero-px" #FileInputs />
+      <div class="line text-danger" [ngClass]="{'hidden': this.warning.file == false}">Selecione o  arquivo{{this.warning.file}}</div>
+    </div>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light waves-effect" data-dismiss="modal" (click)="close()">Fechar</button>
+  <button type="submit" class="btn btn-primary waves-effect waves-light" data-dismiss="modal" (click)="uploadPhoto()">Salvar</button>
+</div>

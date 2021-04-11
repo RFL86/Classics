@@ -1,0 +1,43 @@
+<loader [loaderData]="loaderData"></loader>
+<div class="container-fluid">
+  <app-page-title title="Permissões" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-9">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title">Permissões dos usuários</h4>
+          <div class="table-responsive ">
+            <table class="table mt-4 table-centered">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>Telefone</th>
+                  <th>Status</th>
+                  <th>Perfil</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tb of usersTable">
+                  <td><p class="info-itens">{{tb?.name}}</p></td>
+                  <td><p class="info-itens">{{tb?.email}}</p></td>
+                  <td><p class="info-itens">{{tb?.phoneNumber}}</p></td>
+                  <td><p class="info-itens">{{tb?.statusDescription}}</p></td>
+                  <td><p class="info-itens">{{tb?.profileDescription}}</p></td>
+                  <td>
+                    <button class="btn btn-primary btn-sm waves-effect waves-light"
+                            (click)="showEditUserModal(tb?.profileValue, tb?.statusValue, tb?.name, tb?.userId)" type="submit">
+                      Editar
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

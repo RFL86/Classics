@@ -1,0 +1,50 @@
+<loader [loaderData]="loaderData"></loader>
+<div class="modal-header">
+  <h4 class="modal-title">Cadastro</h4>
+  <button type="button" class="close" aria-hidden="true" (click)="close()">×</button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="col-md-12">
+        <label class="col-form-label">E-mail</label>
+        <input type="email" [(ngModel)]="email" maxlength="50" class="form-control" />
+      </div>
+      <div class="col-md-12">
+        <label class="col-form-label">Nome</label>
+        <input type="text" [(ngModel)]="name" max="30" class="form-control" />
+      </div>
+      <div class="col-md-12">
+        <label class="col-form-label">Telefone</label>
+        <input type="text" [(ngModel)]="phone" mask="(00) 0 0000-0000" maxlength="20" class="form-control" />
+      </div>
+      <div class="col-md-12">
+        <label class="col-form-label">Cep</label>
+        <div class="input-group">
+          <input type="text" class="form-control" mask="00000000" aria-describedby="basic-addon2" minlength="9" [(ngModel)]="postalCode"
+                 (keyup)="getAddress($event)" maxlength="19">
+        </div>
+      </div>
+      <div class="col-md-12">
+        <label class="col-form-label">Senha</label>
+        <input type="password" [(ngModel)]="password1" class="form-control" />
+      </div>
+      <div class="col-md-12">
+        <label class="col-form-label">Confirmação de Senha</label>
+        <input type="password" [(ngModel)]="password2" class="form-control" />
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 mt-2">
+    <ngb-alert type="success" class="alert alert-primary text-success" *ngIf="showSuccessMessage">
+      {{successMessage}}
+    </ngb-alert>
+    <ngb-alert type="warning" class="alert alert-warning text-warning" *ngIf="showErrorMessage">
+      {{errorMessage}}
+    </ngb-alert>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light waves-effect" data-dismiss="modal" (click)="close()">Fechar</button>
+  <button type="submit" class="btn btn-primary waves-effect waves-light" data-dismiss="modal" (click)="checkBeforeSave()">Salvar</button>
+</div>

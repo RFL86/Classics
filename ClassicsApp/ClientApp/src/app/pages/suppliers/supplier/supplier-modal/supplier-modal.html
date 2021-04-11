@@ -1,0 +1,68 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ header }}</h4>
+  <button type="button" class="close" aria-hidden="true" (click)="close()">×</button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <label class="d-inline-flex align-items-center">
+        Titulo
+      </label>
+      <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="title" maxlength="100" aria-describedby="basic-addon2" required minlength="5">
+      </div>
+    </div>
+    <div class="col-md-12">
+      <label class="d-inline-flex align-items-center">
+        Cnpj
+      </label>
+      <div class="input-group">
+        <input type="text" class="form-control" mask="00.000.000/0000-00" aria-describedby="basic-addon2" required minlength="19" [(ngModel)]="cnpj" maxlength="19">
+      </div>
+    </div>
+    <div class="col-md-12">
+      <label class="d-inline-flex align-items-center">
+        Email
+      </label>
+      <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="email" maxlength="50" aria-describedby="basic-addon2" required minlength="6">
+      </div>
+    </div>
+    <div class="col-md-12">
+      <label class="d-inline-flex align-items-center">
+        Telefone
+      </label>
+      <div class="input-group">
+        <input type="text" class="form-control" mask="(00) 0 0000-0000" aria-describedby="basic-addon2"
+               required minlength="14" [(ngModel)]="phoneNumber" maxlength="16">
+      </div>
+    </div>
+    <div class="col-md-12">
+      <label class="d-inline-flex align-items-center">
+        Descrição
+      </label>
+      <div class="input-group">
+        <textarea class="form-control" aria-describedby="basic-addon2" [(ngModel)]="description" rows="5" maxlength="1000" required minlength="20"></textarea>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <label class="col-form-label">Status</label>
+      <ng-select [clearable]="false" [(ngModel)]="selectedStatus" (ngModelChange)="onSelectStatus(selectedStatus)">
+        <ng-option *ngFor="let item of statusList" bindLabel="item.text"
+                   bindValue="item.value" [value]="item">{{item.text}}</ng-option>
+      </ng-select>
+    </div>
+  </div>
+  <div class="col-md-12 mt-2">
+    <ngb-alert type="success" class="alert alert-primary text-success" *ngIf="showSuccessMessage">
+      {{successMessage}}
+    </ngb-alert>
+    <ngb-alert type="warning" class="alert alert-warning text-warning" *ngIf="showErrorMessage">
+      {{errorMessage}}
+    </ngb-alert>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light waves-effect" data-dismiss="modal" (click)="close()">Fechar</button>
+  <button type="submit" class="btn btn-primary waves-effect waves-light" data-dismiss="modal" (click)="save()">Salvar</button>
+</div>
