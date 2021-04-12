@@ -57,6 +57,8 @@ export class ManagementComponent implements OnInit {
     modal.componentInstance.addressInput = addressInput;
     modal.componentInstance.phoneNumberInput = phoneNumberInput;
     modal.componentInstance.carModelInput = carModel; 
-    modal.componentInstance.productIdInput = productId; 
+    modal.componentInstance.productIdInput = productId;
+    modal.result.then(() => { this.getProducts(); }, () => { console.log('Backdrop click') });
+
   }
 }

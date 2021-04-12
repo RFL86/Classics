@@ -9,6 +9,7 @@ namespace ClassicsApp.Services
 {
     public interface IProductService
     {
+        List<UserProduct> GetByModelId(Guid? modelId);
         List<UserProduct> GetAllProducts();
         List<UserProduct> GetByUserId(Guid userId);
         void Edit(Product editProduct);

@@ -5,8 +5,14 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <h4 class="header-title">Anúncios</h4>         
-          <div class="table-responsive ">
+          <h4 class="header-title">Anúncios</h4>
+          <div class="col-md-3">
+            <label class="d-inline-flex align-items-center">
+              Modelo
+            </label>
+            <ng-select [clearable]="false" [items]="modelsList" bindLabel="text" bindValue="value" [multiple]="false" [(ngModel)]="selectedModel" (ngModelChange)="onSelectModel(selectedModel)"></ng-select>
+          </div>
+          <div class="table-responsive mt-2">
             <table class="table mt-4 table-centered">
               <thead>
                 <tr>
@@ -23,9 +29,9 @@
                   <td><p class="info-itens">{{tb?.title}}</p></td>
                   <td><p class="info-itens" ngbTooltip="{{tb?.description}}">{{tb?.shortDescription}}</p></td>
                   <td><p class="info-itens">{{tb?.price | currency:'BRL':'':'':'pt-BR'}}</p></td>
-                  <td><p class="info-itens">{{tb?.createdOn | date:'dd/MM/yyyy HH:mm'}}</p></td>               
+                  <td><p class="info-itens">{{tb?.createdOn | date:'dd/MM/yyyy HH:mm'}}</p></td>
                   <td><p class="info-itens">{{tb?.status}}</p></td>
-                  <td>                  
+                  <td>
                     <button class="btn btn-primary btn-sm waves-effect waves-light ml-2"
                             (click)="showDetailsModal(tb?.productId, tb?.title, tb?.description, tb?.price, tb?.photoUrl, tb?.email, tb?.address, tb?.phone, tb?.carModel)" type="submit">
                       Detalhes

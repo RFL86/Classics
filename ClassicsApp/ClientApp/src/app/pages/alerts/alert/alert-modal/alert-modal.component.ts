@@ -1,8 +1,6 @@
 import { Injectable, Component, OnInit, AfterViewInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { AlertModalService } from './alert-modal.service';
-import { SelectItem } from "./alert-modal.model"
-
 
 @Injectable({
   providedIn: "root"
@@ -18,14 +16,11 @@ export class AlertModalComponent implements OnInit, AfterViewInit {
 
   public subject: string;  
   public message: string;
-  public receiverType: string;
-  public receiversList: SelectItem[];
   public formData: FormData;
   public successMessage: string;
   public errorMessage: string;
   public showSuccessMessage: boolean;
   public showErrorMessage: boolean;
-  public selectedReceiver: SelectItem;
 
   constructor(public _activeModal: NgbActiveModal, public _service: AlertModalService) {
 
@@ -34,10 +29,7 @@ export class AlertModalComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
   }
 
-  ngOnInit(): void {
-    this.fillLists();
-    this.selectedReceiver = this.receiversList[0];
-    this.receiverType = this.selectedReceiver.value;
+  ngOnInit(): void {   
     this.subject = '';
     this.message = '';
     this.formData = new FormData();
@@ -49,30 +41,17 @@ export class AlertModalComponent implements OnInit, AfterViewInit {
     this._activeModal.close();
   }
 
-  fillLists() {
-    this.receiversList = [{ text: 'Clientes', value: '0' }, { text: 'Todos', value: '1' }];  
-  }
-  onSelectReceiver(item) {
-    const selectedItem = item as SelectItem;
-    this.receiverType = selectedItem.value;
-  }
-
   save() {
-
-    console.log(this.subject);
-    console.log(this.message);
-    console.log(this.receiverType);
-
     this.resetFormData();
     this.formData.append('Subject', this.subject);
     this.formData.append('Message', this.message);
-    this.formData.append('Receiver', this.receiverType);
+    this.formData.append('Receiver', '0');
 
     this._service.createAlert(this.formData).subscribe(
       result => {
         if (result == null || result == '') {
           this.showSuccessMessage = true;
-          this.successMessage = 'Alerta com sucesso.';
+          this.successMessage = 'Alerta cadastrado com sucesso.';
           setTimeout(() => {
             this.successMessage = '';
             this.showSuccessMessage = false;

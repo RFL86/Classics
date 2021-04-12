@@ -6,6 +6,8 @@ using ClassicsApp.Services;
 using ClassicsApp.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace ClassicsApp.Controllers
 {
@@ -23,18 +25,22 @@ namespace ClassicsApp.Controllers
 
 
         [HttpGet("GetMyCars")]
+        [Authorize]
         public ActionResult GetMyCars()
         {
-            var userid = new Guid("7BF0E9EB-4D12-4070-98FC-06DBDB703BE0");
+            var user = User.Claims.Where(u => u.Type == ClaimTypes.UserData).FirstOrDefault().Value;
+            var userid = new Guid(user);
             var series = _myCarService.GetMyCars(userid);
             return Ok(series);
         }
 
 
         [HttpPost("AddMyCar")]
+        [Authorize]
         public IActionResult AddMyCar([FromForm] NewCar newCar)
         {
-            var userid = new Guid("7BF0E9EB-4D12-4070-98FC-06DBDB703BE0");
+            var user = User.Claims.Where(u => u.Type == ClaimTypes.UserData).FirstOrDefault().Value;
+            var userid = new Guid(user);
             var result = _myCarService.AddMyCar(newCar, userid);
             return Ok(result);
         }

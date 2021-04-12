@@ -47,11 +47,12 @@ export class MyCarComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Minha Conta', path: '/' }, { label: 'Meus Carros', path: '/', active: true }];   
+    this.loaderData = { visible: false, text: "" };
+
     this.getMyCarsTable();
     this.getBrands();
     this.formData = new FormData();
-    this.cleanInputs();
-    this.loaderData = { visible: false, text: "" };
+    this.cleanInputs();  
   }
 
   cleanInputs() {
@@ -157,13 +158,13 @@ export class MyCarComponent implements OnInit {
           if (result == null || result == '') {
             this.name = '';
             this.showSuccessMessage = true;
-            this.successMessage = 'Carro cadastrada com sucesso.';
+            this.successMessage = 'Carro cadastrado com sucesso.';
             setTimeout(() => {
               this.successMessage = '';
               this.showSuccessMessage = false;
+              this.getMyCarsTable();
             },
               2000);
-            //this.getSeriesTable();
           } else {
             this.showErrorMessage = true;
             this.errorMessage = result;
@@ -181,7 +182,7 @@ export class MyCarComponent implements OnInit {
       this.loaderData = { visible: false, text: "" };
       this.resetFormData();
       this.showErrorMessage = false;
-      this.showSuccessMessage = false;
+      this.showSuccessMessage = false;      
     }
   }
 

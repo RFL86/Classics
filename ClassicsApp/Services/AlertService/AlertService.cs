@@ -21,7 +21,7 @@ namespace ClassicsApp.Services
 
         public List<ViewModels.AlertViewModel> GetAll()
         {
-            var alerts = _unitOfWork.AlertRepository.Get().Select(a => new ViewModels.AlertViewModel
+            var alerts = _unitOfWork.AlertRepository.Get( a=> !a.Message.Contains("moderação")).Select(a => new ViewModels.AlertViewModel
             {
                 AlertId = a.AlertId,
                 Subject = a.Subject,
@@ -40,7 +40,7 @@ namespace ClassicsApp.Services
 
         public List<ViewModels.UserAlert> GetUserAlerts(Guid userId)
         {
-            var alerts = _unitOfWork.UserAlertRepository.Get(a => a.UserId == userId).Select(a => new ViewModels.UserAlert
+            var alerts = _unitOfWork.UserAlertRepository.Get(a => a.UserId == userId && a.Alert.Status == Enums.Alert.AlertStatus.Available).Select(a => new ViewModels.UserAlert
             {
                 UserAlertId = a.UserAlertId,
                 Subject = a.Alert.Subject,

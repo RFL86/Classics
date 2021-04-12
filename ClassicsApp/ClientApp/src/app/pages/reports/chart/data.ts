@@ -5,7 +5,7 @@ const productStatusChart: ChartType = {
     height: 320,
     type: 'pie',
   },
-  series: [45, 5, 12],
+  series: [12, 5, 5],
   labels: ['Ativos', 'Inativos', 'Pendentes'],
   colors: ['#3bafda', '#d1dee4', '#f672a7'],
   legend: {
@@ -39,7 +39,7 @@ const alertReadingStatusChart: ChartType = {
     height: 320,
     type: 'pie',
   },
-  series: [45, 12],
+  series: [12, 7],
   labels: ['Lidos', 'Não lidos'],
   colors: ['#3bafda',  '#FFA7B6'],
   legend: {
@@ -73,7 +73,7 @@ const carsByBrand: ChartType = {
     height: 320,
     type: 'donut',
   },
-  series: [44, 55, 41, 17, 15],
+  series: [7, 12, 15, 11, 10],
   legend: {
     show: true,
     position: 'bottom',
@@ -123,7 +123,7 @@ const productByState: ChartType = {
     enabled: false
   },
   series: [{
-    data: [100, 130, 80, 210, 70, 95]
+    data: [19, 5, 23, 3, 32, 18]
   }],
   colors: ['#1abc9c'],
   xaxis: {
@@ -157,7 +157,7 @@ const usersStatus: ChartType = {
     enabled: false
   },
   series: [{
-    data: [230, 38]
+    data: [34, 3]
   }],
   colors: ['#3BAFDA'],
   xaxis: {

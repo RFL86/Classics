@@ -35,12 +35,13 @@ registerLocaleData(localeFr, 'pt', localeFrExtra);
     NgbModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp({
-      apiKey: "AIzaSyAgzgERn4UotjcSeSAd-8Nl7iTKpqjUses",
-      authDomain: "classics-8455c.firebaseapp.com",
-      projectId: "classics-8455c",
-      storageBucket: "classics-8455c.appspot.com",
-      messagingSenderId: "503619324593",
-      appId: "1:503619324593:web:8fc5bcd5f70f84e098f090"
+      apiKey: "AIzaSyDzsfzttCzHOnNOklRaOAQpWoy8LdHdVog",
+      authDomain: "relics-d36c3.firebaseapp.com",
+      databaseURL: "https://relics-d36c3.firebaseio.com",
+      projectId: "relics-d36c3",
+      storageBucket: "relics-d36c3.appspot.com",
+      messagingSenderId: "963254056325",
+      appId: "1:963254056325:web:7d8a3d1e8daea9b15380ec"
     }),
     AngularFireAuthModule,
     AngularFirestoreModule

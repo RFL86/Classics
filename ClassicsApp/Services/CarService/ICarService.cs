@@ -16,9 +16,9 @@ namespace ClassicsApp.Services
         List<SelectListItem> GetBrandsSelectList();       
         List<SelectListItem> GetModelSelectListByBrandId(Guid brandId);
         List<SelectListItem> GetSeriesSelectListByModelId(Guid modelId);
-        string AddSerie(string serieName, Guid modelId);
-        string AddBrand(string brandName);
-        string AddCarModel(string modelName, Guid brandId);
+        string AddSerie(string serieName, Guid modelId, Guid userId);
+        string AddBrand(string brandName, Guid userId);
+        string AddCarModel(string modelName, Guid brandId, Guid userId);
         public string EditSerie(Guid serieId, Enums.Serie.SerieStatus status, string name);
         public string EditModel(Guid modelId, Enums.CarModel.CarModelStatus status, string name);
         public string EditBrand(Guid brandId, Enums.Brand.BrandStatus status, string name);
@@ -27,6 +27,7 @@ namespace ClassicsApp.Services
         List<SelectListItem> GetActiveSeriesSelectListByModelId(Guid modelId);
         List<SelectListItem> GetAllModels();
         List<SelectListItem> GetModels();
+        List<SelectListItem> GetUserCars(Guid userId);
 
     }
 }

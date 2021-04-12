@@ -26,7 +26,7 @@ namespace ClassicsApp.Controllers
         }
 
         [HttpGet("GetUsers")]
-        //[Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Manager")]
         public ActionResult GetUsers()
         {
             var users = _userService.GetAll();
@@ -67,35 +67,48 @@ namespace ClassicsApp.Controllers
         [AllowAnonymous]
         public IActionResult AddUser([FromForm] NewUser user)
         {
+            if (_userService.CheckIfExists(user.Email))
+                return Ok("O e-mail informado já foi cadastrado anteriormente.");
+
             _userService.Create(user);
             return Ok();
         }
 
-        //[HttpPost]
-        //[Route("GoogleAuthenticate")]
-        //public async Task<ActionResult<dynamic>> GoogleAuthenticate([FromForm] string token)
-        //{
-        //    var auth = FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance;
+        [HttpPost]
+        [Route("GoogleAuthenticate")]
+        public async Task<ActionResult<dynamic>> GoogleAuthenticate([FromForm] string googleToken)
+        {
+            var auth = FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance;
 
-        //    try
-        //    {
-        //        var response = await auth.VerifyIdTokenAsync(token);
-        //        //add claims como no authenticate              
-        //        //var teste = auth
+            try
+            {
+                var response = await auth.VerifyIdTokenAsync(googleToken);
+                if(response != null)
+                {
+                    var name = response.Claims.Where(x => x.Key == "name").FirstOrDefault().Value.ToString();
+                    var email = response.Claims.Where(x => x.Key == "email").FirstOrDefault().Value.ToString();
 
-        //        if (response != null)
-        //        {
+                    var user = _userService.GetLoggedUserFromGoogle(email, name);
+                    if (!string.IsNullOrEmpty(user.LoginMessage))
+                        return Ok(null);
 
-        //            return Accepted();
-        //        }
-        //    }
-        //    catch (FirebaseException ex)
-        //    {
-        //        return BadRequest();
-        //    }
+                    var token = Helpers.TokenService.GenerateToken(user);
+                    user.Token = token;
+                    return Ok(new
+                    {
+                        user.Token,
+                        user.Name,
+                        user.ProfileTypeValue
+                    });
+                }
+            }
+            catch (FirebaseException ex)
+            {
+                return BadRequest();
+            }
 
-        //    return BadRequest();
-        //}
+            return BadRequest();
+        }
 
 
         [HttpPost]
@@ -109,8 +122,6 @@ namespace ClassicsApp.Controllers
                 return Ok(null);
 
             var token = Helpers.TokenService.GenerateToken(user);
-            model.Password = string.Empty;
-
             user.Token = token;
             return Ok(new
             {

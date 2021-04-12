@@ -34,8 +34,8 @@ namespace ClassicsApp.ObjectValue
     public class EditUserProfile
     {
         public Guid UserId { get; set; }    
-        public Enums.User.UserStatus Status { get; set; }
-        public Enums.Profile.ProfileType ProfileType { get; set; }
+        public int Status { get; set; }
+        public int ProfileType { get; set; }
 
     }
 

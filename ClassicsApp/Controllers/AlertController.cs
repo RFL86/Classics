@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace ClassicsApp.Controllers
 {
@@ -27,20 +29,22 @@ namespace ClassicsApp.Controllers
         }
 
         [HttpGet("GetUserAlerts")]
+        [Authorize]
         public ActionResult GetUserAlerts()
         {
-            var userId = new Guid("3FBBD0D1-299C-48FF-BB0C-FE8E7003C766");
+            var user = User.Claims.Where(u => u.Type == ClaimTypes.UserData).FirstOrDefault().Value;
+            var userId = new Guid(user);
             var alerts = _alertService.GetUserAlerts(userId);
             return Ok(alerts);
         }
-        
 
-       [HttpPost("AddAlert")]
+        [HttpPost("AddAlert")]
+        [Authorize]
         public IActionResult AddAlert([FromForm] ViewModels.NewAlert alert)
         {
-            //TODO: pegar da sessão
-            alert.CreatedBy = new Guid("7BF0E9EB-4D12-4070-98FC-06DBDB703BE0");
-
+            var user = User.Claims.Where(u => u.Type == ClaimTypes.UserData).FirstOrDefault().Value;
+            var userId = new Guid(user);
+            alert.CreatedBy = userId;
             _alertService.Create(alert);
             return Ok();
         }

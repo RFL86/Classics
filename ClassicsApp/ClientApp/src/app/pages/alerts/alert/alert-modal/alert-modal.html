@@ -21,13 +21,6 @@
         <textarea class="form-control" aria-describedby="basic-addon2" [(ngModel)]="message" rows="5" maxlength="400" required minlength="20"></textarea>
       </div>
     </div>
-    <div class="col-md-12">
-      <label class="col-form-label">Destinatários</label>
-      <ng-select [clearable]="false" [(ngModel)]="selectedReceiver" (ngModelChange)="onSelectReceiver(selectedReceiver)">
-        <ng-option *ngFor="let item of receiversList" bindLabel="item.text"
-                   bindValue="item.value" [value]="item">{{item.text}}</ng-option>
-      </ng-select>
-    </div>
   </div>
   <div class="col-md-12 mt-2">
     <ngb-alert type="success" class="alert alert-primary text-success" *ngIf="showSuccessMessage">

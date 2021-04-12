@@ -44,12 +44,6 @@ export class TopbarComponent implements OnInit {
 
   }
 
-  logout() {
-    this.userName = '';
-    this._service.logout();
-    this._bindingService.handleSideBar();
-  }
-
   /**
    * Change the language
    * @param language language

@@ -98,14 +98,25 @@ export class SupplierModalComponent implements OnInit, AfterViewInit {
   }
 
   save() {
+
+    if (this.supplierId == '') {
+      this.supplierId = '00000000-0000-0000-0000-000000000000';
+    }
     this.resetFormData();
-    this.formData.append('Title', this.status);
+    this.formData.append('Title', this.title);
     this.formData.append('Description', this.description);
     this.formData.append('Email', this.email);
-    this.formData.append('PhoneNumber', this.phoneInput);
+    this.formData.append('PhoneNumber', this.phoneNumber);
     this.formData.append('Cnpj', this.cnpj);
-    this.formData.append('Status', this.status);
+    this.formData.append('Status', this.status);  
     this.formData.append('SupplierId', this.supplierId);
+
+    console.log(this.title)
+    console.log(this.status)
+    console.log(this.description)
+    console.log(this.email)
+    console.log(this.phoneNumber)
+    console.log(this.supplierId)
 
     if (this.function == 'edit') {
       this.editSupplier();

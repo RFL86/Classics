@@ -87,8 +87,7 @@ export class ProductModalComponent implements OnInit, AfterViewInit {
   }
 
   onSelectModel(item) {
-    const selectedItem = item as SelectItem;
-    this.modelId = selectedItem.value;
+    this.modelId = item;
   }
 
   getCarModels() {
@@ -115,8 +114,9 @@ export class ProductModalComponent implements OnInit, AfterViewInit {
     this.formData.append('Title', this.title);
     this.formData.append('Description', this.description);
     this.formData.append('Price', this.price);
-    this.formData.append('Status', this.status);
+    this.formData.append('StatusValue', this.status);
     this.formData.append('ProductId', this.productId);
+    this.formData.append('CarModelId', this.modelId);
 
     if (this.function == 'edit') {
       this.editProduct();

@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace ClassicsApp.Controllers
 {
@@ -70,24 +72,33 @@ namespace ClassicsApp.Controllers
 
 
         [HttpPost("AddSerie")]
+        [Authorize]
         public IActionResult AddSerie([FromForm] NewSerie newSerie)
         {
-            var result = _carService.AddSerie(newSerie.Name, newSerie.CarModelId);
+            var user = User.Claims.Where(u => u.Type == ClaimTypes.UserData).FirstOrDefault().Value;
+            var userId = new Guid(user);
+            var result = _carService.AddSerie(newSerie.Name, newSerie.CarModelId, userId);
             return Ok(result);
         }
 
 
         [HttpPost("AddCarModel")]
+        [Authorize]
         public IActionResult AddCarModel([FromForm] NewCarModel newCarModel)
         {
-            var result = _carService.AddCarModel(newCarModel.Name, newCarModel.BrandId);
+            var user = User.Claims.Where(u => u.Type == ClaimTypes.UserData).FirstOrDefault().Value;
+            var userId = new Guid(user);
+            var result = _carService.AddCarModel(newCarModel.Name, newCarModel.BrandId, userId);
             return Ok(result);
         }
 
         [HttpPost("AddBrand")]
+        [Authorize]
         public IActionResult AddBrand([FromForm] NewBrand newBrand)
         {
-            var result = _carService.AddBrand(newBrand.Name);
+            var user = User.Claims.Where(u => u.Type == ClaimTypes.UserData).FirstOrDefault().Value;
+            var userId = new Guid(user);
+            var result = _carService.AddBrand(newBrand.Name, userId);
             return Ok(result);
         }
 
@@ -140,6 +151,21 @@ namespace ClassicsApp.Controllers
         {
             var series = _carService.GetActiveSeriesSelectListByModelId(modelId);
             return Ok(series);
+        }
+
+        [HttpGet("GetUserCars")]
+        [AllowAnonymous]
+        public IActionResult GetUserCars()
+        {
+            var hasLoggedUser = User.Claims.Any();
+            var userId = Guid.Empty;
+            if (hasLoggedUser)
+            {
+                var user = User.Claims.Where(u => u.Type == ClaimTypes.UserData).FirstOrDefault().Value;
+                userId = new Guid(user);            }
+      
+            var cars = _carService.GetUserCars(userId);
+            return Ok(cars);
         }
 
     }

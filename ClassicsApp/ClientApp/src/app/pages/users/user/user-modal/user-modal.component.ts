@@ -18,8 +18,8 @@ export class UserModalComponent implements OnInit, AfterViewInit {
   @Input()
   statusInput: string;
   profileTypeInput: string;
-  alertIdInput: string;
-  alertNameInput: string;
+  userIdInput: string;
+  userNameInput: string;
 
   public status: string;
   public profileType: string;
@@ -44,7 +44,7 @@ export class UserModalComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.status = this.statusInput;
     this.profileType = this.profileTypeInput;
-    this.userId = this.alertIdInput;
+    this.userId = this.userIdInput;
     this.formData = new FormData();
     this.showErrorMessage = false;
     this.showSuccessMessage = false;
@@ -73,7 +73,7 @@ export class UserModalComponent implements OnInit, AfterViewInit {
     this.profileType = selectedItem.value;
   }
 
-  editAlert() {
+  public editUser() {
 
     this.resetFormData();
     this.formData.append('Status', this.status);

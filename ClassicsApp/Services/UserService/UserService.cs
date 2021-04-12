@@ -21,7 +21,7 @@ namespace ClassicsApp.Services
 
         public void Create(NewUser newUser)
         {
-            var profile = _unitOfWork.ProfileRepository.FirstOrDefault(p => p.Type == Enums.Profile.ProfileType.Client);
+            var profileId = _unitOfWork.ProfileRepository.FirstOrDefault(p => p.Type == Enums.Profile.ProfileType.Client).ProfileId;
 
             var address = new Address
             {
@@ -35,10 +35,10 @@ namespace ClassicsApp.Services
             {
                 UserId = Guid.NewGuid(),
                 Name = newUser.Name,
-                Email = newUser.Email,
+                Email = newUser.Email.Trim().ToLower(),
                 Password1 = Helpers.Crypt.Sha256(newUser.Password),
                 Status = Enums.User.UserStatus.Enabled,
-                ProfileId = profile.ProfileId,
+                ProfileId = profileId,
                 CreatedOn = DateTime.Now
             };
 
@@ -47,12 +47,17 @@ namespace ClassicsApp.Services
             _unitOfWork.Commit();
         }
 
+        public bool CheckIfExists(string email) 
+        { 
+            return _unitOfWork.UserRepository.GetIQueryable(p => p.Email.Equals(email.Trim().ToLower())).Any();
+        }
+
         public void Update(EditUserProfile editUser)
         {
             var user = _unitOfWork.UserRepository.Get(u => u.UserId == editUser.UserId).First();
-            var profile = _unitOfWork.ProfileRepository.Get(p => p.Type == editUser.ProfileType).First();
+            var profile = _unitOfWork.ProfileRepository.Get(p => p.Type == (Enums.Profile.ProfileType)editUser.ProfileType).First();
 
-            user.Status = editUser.Status;
+            user.Status = (Enums.User.UserStatus)editUser.Status;
             user.ProfileId = profile.ProfileId;
 
             _unitOfWork.UserRepository.Edit(user);
@@ -83,7 +88,7 @@ namespace ClassicsApp.Services
             if (user == null)
                 return new LoggedUser { LoginMessage = "Usuário ou senha inválidos." };
 
-            var userLogin = new LoggedUser
+            var logged = new LoggedUser
             {
                 UserId = user.UserId,
                 Email = user.Email,
@@ -91,11 +96,61 @@ namespace ClassicsApp.Services
                 LoginMessage = string.Empty,
                 ProfileType = Helpers.EnumHelper.GetDescription(user.Profile.Type),
                 ProfileTypeValue = user.Profile.Type.GetHashCode(),
-                PostalCode = user.Address != null ? user.Address.ZipCode : "Não informado"
+                PostalCode = user.Address != null ? user.Address.ZipCode : string.Empty
             };
 
-            return userLogin;
+            return logged;
         }
+
+        public LoggedUser GetLoggedUserFromGoogle(string email, string name)
+        {
+            var user = _unitOfWork.UserRepository.Get(u => u.Email.Equals(email.Trim().ToLower())).FirstOrDefault();
+
+            if (user == null)
+                CreateFromGoogle(email, name);
+
+            var logged = GetByEmail(email);
+
+            return logged;
+        }
+
+        public void CreateFromGoogle(string email, string name)
+        {
+            var profileId = _unitOfWork.ProfileRepository.FirstOrDefault(p => p.Type == Enums.Profile.ProfileType.Client).ProfileId;
+
+            var user = new User
+            {
+                UserId = Guid.NewGuid(),
+                Name = name,
+                Email = email.Trim().ToLower(),
+                Status = Enums.User.UserStatus.Enabled,
+                ProfileId = profileId,
+                CreatedOn = DateTime.Now
+            };
+
+            _unitOfWork.UserRepository.Add(user);
+            _unitOfWork.Commit();
+        }
+
+        public LoggedUser GetByEmail(string email)
+        {
+            var user = _unitOfWork.UserRepository.Get(u => u.Email.Equals(email)).FirstOrDefault();
+
+            var logged = new LoggedUser
+            {
+                UserId = user.UserId,
+                Email = user.Email,
+                Name = user.Name,
+                LoginMessage = string.Empty,
+                ProfileType = Helpers.EnumHelper.GetDescription(user.Profile.Type),
+                ProfileTypeValue = user.Profile.Type.GetHashCode(),
+                PostalCode = user.Address != null ? user.Address.ZipCode : string.Empty
+            };
+
+            return logged;
+        }
+
+
 
         public List<UsersList> GetAll()
         {

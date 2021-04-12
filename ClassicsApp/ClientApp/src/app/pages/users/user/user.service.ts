@@ -11,17 +11,17 @@ export class UserService {
   private _baseUrl: string;
   public _token: string;
 
-  constructor(private client: HttpClient, public _activatedRouter: ActivatedRoute ,private _router: Router, @Inject('BASE_URL')
+  constructor(private client: HttpClient, public _activatedRouter: ActivatedRoute, private _router: Router, @Inject('BASE_URL')
   baseUrl: string) {
     this._baseUrl = baseUrl;
 
-    this.checkIfIsLogged(); 
+    this.checkIfIsLogged();
     this._token = 'Bearer ' + localStorage.getItem('token');
   }
 
   checkIfIsLogged() {
     if (localStorage.getItem('token') == '' || localStorage.getItem('token') == null) {
-      this._router.navigate(['../store'], { relativeTo: this._activatedRouter })
+      this._router.navigate(['../login'], { relativeTo: this._activatedRouter })
     }
   }
 
@@ -33,7 +33,8 @@ export class UserService {
   }
 
   public editUser(formData: FormData): Observable<string> {
-    const response = this.client.post<string>(this._baseUrl + 'api/User/EditUser', formData, { responseType: 'text' as 'json' });
+    const httpOptions = { headers: new HttpHeaders({ "Authorization": this._token }), "responseType": 'text' as 'json' };
+    const response = this.client.post<string>(this._baseUrl + 'api/User/EditUser', formData, httpOptions);
     return response;
   }
 

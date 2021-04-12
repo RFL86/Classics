@@ -9,6 +9,8 @@ using ClassicsApp.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace ClassicsApp.Controllers
 {
@@ -27,21 +29,27 @@ namespace ClassicsApp.Controllers
         }
 
         [HttpGet("GetUserProducts")]
+        [Authorize]
         public ActionResult GetUserProducts()
         {
-            var owner = new Guid("7BF0E9EB-4D12-4070-98FC-06DBDB703BE0");
+            var user = User.Claims.Where(u => u.Type == ClaimTypes.UserData).FirstOrDefault().Value;     
+            var owner = new Guid(user);
             var products = _productService.GetByUserId(owner);
 
-            var teste = User.Claims;
-            var testes = User;
+            return Ok(products);
+        }
 
+        [HttpGet("GetByModel")]
+        public ActionResult GetByModel(Guid? modelId)
+        {         
+            var products = _productService.GetByModelId(modelId);
 
             return Ok(products);
         }
 
         [HttpGet("GetAllProducts")]
         public ActionResult GetAllProducts()
-        {         
+        {
             var products = _productService.GetAllProducts();
 
             return Ok(products);
@@ -49,9 +57,11 @@ namespace ClassicsApp.Controllers
 
 
         [HttpPost("AddProduct")]
+        [Authorize]
         public IActionResult AddProduct([FromForm] ViewModels.Product product)
         {
-            var owner = new Guid("7BF0E9EB-4D12-4070-98FC-06DBDB703BE0");
+            var user = User.Claims.Where(u => u.Type == ClaimTypes.UserData).FirstOrDefault().Value;
+            var owner = new Guid(user);
             _productService.Create(product, owner);
             return Ok();
         }
@@ -76,11 +86,11 @@ namespace ClassicsApp.Controllers
         public IActionResult Manage([FromForm] ManageProduct manageProduct)
         {
             _productService.ManageProduct(manageProduct);
-            return Ok();
+            return Ok(true);
         }
 
         [HttpPost("UploadPhoto")]
-        public IActionResult UploadRechargeReceipt([FromForm] ProductPhoto productPhoto)
+        public IActionResult UploadPhoto([FromForm] ProductPhoto productPhoto)
         {
             try
             {

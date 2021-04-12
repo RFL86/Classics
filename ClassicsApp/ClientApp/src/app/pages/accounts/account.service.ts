@@ -19,7 +19,7 @@ export class AccountService {
 
   checkIfIsLogged() {
     if (localStorage.getItem('token') == '' || localStorage.getItem('token') == null) {
-      this._router.navigate(['../store'], { relativeTo: this._activatedRouter })
+      this._router.navigate(['../login'], { relativeTo: this._activatedRouter })
     }
   }
 

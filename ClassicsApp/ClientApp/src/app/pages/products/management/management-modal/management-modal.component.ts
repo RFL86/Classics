@@ -33,7 +33,6 @@ export class ManagementModalComponent implements OnInit, AfterViewInit {
   public address: string;
   public photoUrl: string;
   public carModel: string;
-  public productId: string;
   public formData: FormData;
   public successMessage: string;
   public errorMessage: string;
@@ -58,11 +57,12 @@ export class ManagementModalComponent implements OnInit, AfterViewInit {
     this.email = this.emailInput;
     this.carModel = this.carModelInput;
     this.formData = new FormData();
-    this.formData.append('ProductId', this.productId);
+    this.formData.append('ProductId', this.productIdInput);
     this.showErrorMessage = false;
     this.showSuccessMessage = false;
     this.errorMessage = "Erro ao mudar status";
     this.successMessage = "Item alterado com sucesso";
+
   }
 
   close() {

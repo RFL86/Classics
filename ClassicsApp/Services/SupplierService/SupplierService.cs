@@ -13,10 +13,12 @@ namespace ClassicsApp.Services
     public class SupplierService : ISupplierService
     {
         private readonly IBaseUnitOfWork _unitOfWork;
+        private readonly IAlertService _alertService;
 
-        public SupplierService(IBaseUnitOfWork unitOfWork)
+        public SupplierService(IBaseUnitOfWork unitOfWork, IAlertService alertService)
         {
             _unitOfWork = unitOfWork;
+            _alertService = alertService;
         }
 
         public List<SupplierViewModel> GetAll()
@@ -78,6 +80,16 @@ namespace ClassicsApp.Services
 
             _unitOfWork.SupplierRepository.Add(newSupplier);
             _unitOfWork.Commit();
+
+            var alert = new NewAlert
+            {
+                Subject = "Novo Fornecedor",
+                Message = "Novo fornecedor de peças cadastrado no Classics: " + supplier.Title,
+                CreatedBy = supplier.CreatedBy,
+                Receiver = 0
+            };
+
+            _alertService.Create(alert);
         }
 
         public void Edit(ViewModels.Supplier supplier)

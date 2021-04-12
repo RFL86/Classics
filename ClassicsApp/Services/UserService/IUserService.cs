@@ -13,5 +13,7 @@ namespace ClassicsApp.Services
         void Create(NewUser newUser);
         LoggedUser GetLoggedUser(string email, string password);
         List<UsersList> GetAll();
+        bool CheckIfExists(string email);
+        LoggedUser GetLoggedUserFromGoogle(string email, string name);
     }
 }

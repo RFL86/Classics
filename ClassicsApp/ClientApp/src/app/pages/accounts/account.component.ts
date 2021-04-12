@@ -16,18 +16,24 @@ import { BindingService } from '../../services/binding.service';
 export class AccountComponent implements OnInit {
 
   public user: any;
+  public loaderData: any;
+
   constructor(private _modalService: NgbModal, public _bindingService: BindingService, public _service: AccountService) {
 
   }
 
   ngOnInit(): void {
+    this.loaderData = { visible: false, text: "" };
     this.getUser()
   }
 
   getUser() {
+    this.loaderData = { visible: true, text: "" };
+
     this._service.getUser().subscribe(
       result => {
         this.user = result;
+        this.loaderData = { visible: false, text: "" };
       },
       error => {
         console.log(error);

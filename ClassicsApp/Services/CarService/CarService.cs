@@ -106,26 +106,7 @@ namespace ClassicsApp.Services
             return series;
         }
 
-
-        //public List<CarModel> GetCarModels()
-        //{
-        //    var carModels = _unitOfWork.CarModelRepository.Get(c => c.Status == Data.Enums.CarModel.CarModelStatus.Enable).ToList();
-        //    return carModels;
-        //}
-
-        //public List<Brand> GetBrands()
-        //{
-        //    var brands = _unitOfWork.BrandRepository.Get(c => c.Status == Brand.BrandStatus.Enable).ToList();
-        //    return brands;
-        //}
-
-        //public List<Serie> GetSeries()
-        //{
-        //    var series = _unitOfWork.SerieRepository.Get(c => c.Status == Serie.SerieStatus.Enable).ToList();
-        //    return series;
-        //}
-
-        public string AddCarModel(string modelName, Guid brandId)
+        public string AddCarModel(string modelName, Guid brandId, Guid userId)
         {
             if (string.IsNullOrEmpty(modelName))
                 return "Tamanho do nome inválido.";
@@ -140,7 +121,7 @@ namespace ClassicsApp.Services
                 BrandId = brandId,
                 Name = modelName.Trim(),
                 CreatedOn = DateTime.Now,
-                CreatedBy = new Guid("7BF0E9EB-4D12-4070-98FC-06DBDB703BE0"),
+                CreatedBy = userId,
                 Status = Enums.CarModel.CarModelStatus.Enabled
             };
 
@@ -150,7 +131,7 @@ namespace ClassicsApp.Services
             return string.Empty;
         }
 
-        public string AddBrand(string brandName)
+        public string AddBrand(string brandName, Guid userId)
         {
             if (string.IsNullOrEmpty(brandName))
                 return "Tamanho do nome inválido.";
@@ -164,7 +145,7 @@ namespace ClassicsApp.Services
                 BrandId = Guid.NewGuid(),
                 Name = brandName.Trim(),
                 CreatedOn = DateTime.Now,
-                CreatedBy = new Guid("7BF0E9EB-4D12-4070-98FC-06DBDB703BE0"),
+                CreatedBy = userId,
                 Status = Enums.Brand.BrandStatus.Enabled
             };
 
@@ -173,7 +154,7 @@ namespace ClassicsApp.Services
             return string.Empty;
         }
 
-        public string AddSerie(string serieName, Guid modelId)
+        public string AddSerie(string serieName, Guid modelId, Guid userId)
         {
             if (string.IsNullOrEmpty(serieName))
                 return "Tamanho do nome inválido.";
@@ -188,7 +169,7 @@ namespace ClassicsApp.Services
                 CarModelId = modelId,
                 Name = serieName.Trim(),
                 CreatedOn = DateTime.Now,
-                CreatedBy = new Guid("7BF0E9EB-4D12-4070-98FC-06DBDB703BE0"),
+                CreatedBy = userId,
                 Status = Enums.Serie.SerieStatus.Enabled
             };
 
@@ -378,7 +359,18 @@ namespace ClassicsApp.Services
             return seriesList;
         }
 
+        public List<SelectListItem> GetUserCars(Guid userId)
+        {
+            var modelsList = _unitOfWork.MyCarRepository.Get(c => c.OwnerId == userId).Select(m => new SelectListItem
+            {
+                Text = string.Concat(m.NickName),
+                Value = m.Serie.CarModelId.ToString()
+            }).OrderBy(m => m.Text).ToList();
 
+            modelsList.Insert(0, new SelectListItem() { Text = "Todos", Value = Guid.Empty.ToString() });
+
+            return modelsList;
+        }
 
     }
 }

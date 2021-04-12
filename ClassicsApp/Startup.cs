@@ -46,11 +46,11 @@ namespace ClassicsApp
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            //var pathToKey = Path.Combine(Directory.GetCurrentDirectory(), "Keys", "relics-d36c3-firebase-adminsdk-1dom9-40eeefb374.json");
-            //FirebaseApp.Create(new AppOptions
-            //{
-            //    Credential = GoogleCredential.FromFile(pathToKey)
-            //});
+            var pathToKey = Path.Combine(Directory.GetCurrentDirectory(), "Keys", "relics-d36c3-firebase-adminsdk-1dom9-40eeefb374.json");
+            FirebaseApp.Create(new AppOptions
+            {
+                Credential = GoogleCredential.FromFile(pathToKey)
+            });
 
             var key = Encoding.ASCII.GetBytes(Settings.Secret);
             services.AddAuthentication(x =>
@@ -91,13 +91,13 @@ namespace ClassicsApp
             //          .Build();
             //  });
 
-            //services.AddAuthorization(options =>
-            //{
-            //    options.DefaultPolicy = new AuthorizationPolicyBuilder()
-            //        .RequireAuthenticatedUser()
-            //        .AddAuthenticationSchemes("Firebase", "Custom")
-            //        .Build();
-            //});
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes()
+                    .Build();
+            });
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMyCarService, MyCarService>();

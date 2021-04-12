@@ -7,7 +7,7 @@
       <li class="menu-title">Navegação</li>
 
       <li>
-        <a href="javascript: void(0);" class="waves-effect">
+        <a href="javascript: void(0);" class="waves-effect" aria-expanded="false">
           <i class=" remixicon-store-3-fill"></i>
           <span> Início </span>
           <span class="menu-arrow"></span>
@@ -21,7 +21,7 @@
           </li>
         </ul>
       </li>
-      <li *ngIf="permission == '0' || permission == '1' || permission == '2'">
+      <li *ngIf="permission == '0'">
         <a href="javascript: void(0);" class="waves-effect">
           <i class="remixicon-account-circle-line"></i>
           <span> Minha Conta </span>
@@ -36,10 +36,7 @@
           </li>
           <li>
             <a [routerLink]="['/mycar']" class="side-nav-link-ref" routerLinkActive="active">Meus Carros</a>
-          </li>
-          <li>
-            <a [routerLink]="['/account']" class="side-nav-link-ref" routerLinkActive="active">Dados Pessoais</a>
-          </li>
+          </li>         
         </ul>
       </li>
       <li *ngIf="permission == '1' || permission == '2'">
@@ -73,6 +70,12 @@
         <a [routerLink]="['/login']" class="waves-effect" aria-expanded="false">
           <i class="remixicon-login-circle-line"></i>
           <span> Login/Cadastro </span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/account']" class="waves-effect" aria-expanded="false" *ngIf="permission == '0' || permission == '1' || permission == '2'">
+          <i class="remixicon-account-circle-line"></i>
+          <span> Dados Pessoais </span>
         </a>
       </li>
     </ul>

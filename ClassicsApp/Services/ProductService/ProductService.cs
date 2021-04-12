@@ -32,10 +32,34 @@ namespace ClassicsApp.Services
                 PhotoUrl = p.BlobFiles.FirstOrDefault(b => b.Status == Enums.BlobFile.BlobFileStatus.Enabled)?.Url,
                 Phone = string.IsNullOrEmpty(p.Owner.MobilePhone) ? "Não informado" : p.Owner.MobilePhone,
                 Email = p.Owner.Email,
-                Address = p.Owner.Address.City + "-" + p.Owner.Address.StateCode,
+                Address = p.Owner?.Address != null? p.Owner?.Address.City + "-" + p.Owner.Address.StateCode : "Não informado",
                 CarModelId = p.CarModelId,
                 CarModel = p.CarModel?.Name ?? "Não especificado"
             }).OrderByDescending(p => p.CreatedOn).ToList();
+            return products;
+        }
+
+        public List<UserProduct> GetByModelId(Guid? modelId)
+        {
+            var products = _unitOfWork.ProductRepository.Get(p => (p.CarModelId == modelId || modelId == Guid.Empty) && p.Status == Enums.Product.ProductStatus.Enable).Select(p => new UserProduct
+            {
+                ProductId = p.ProductId,
+                Title = p.Title,
+                Description = p.Description,
+                ShortDescription = p.Description.Substring(0, Math.Min(p.Description.Length, 60)) +
+                (Math.Min(p.Description.Length, 60) == 60 ? "(...)" : ""),
+                Price = p.Price,
+                CreatedOn = p.CreatedOn,
+                Status = Helpers.EnumHelper.GetDescription(p.Status),
+                StatusValue = p.Status.GetHashCode(),
+                PhotoUrl = p.BlobFiles.FirstOrDefault(b => b.Status == Enums.BlobFile.BlobFileStatus.Enabled)?.Url,
+                Phone = string.IsNullOrEmpty(p.Owner.MobilePhone) ? "Não informado" : p.Owner.MobilePhone,
+                Email = p.Owner.Email,
+                Address = p.Owner?.Address == null ? "Não informado" :  p.Owner.Address.City + "-" + p.Owner.Address.StateCode,
+                CarModelId = p.CarModelId,
+                CarModel = p.CarModel?.Name ?? "Não especificado"
+            }).OrderByDescending(p => p.CreatedOn).Take(1000).ToList();
+
             return products;
         }
 
@@ -55,7 +79,7 @@ namespace ClassicsApp.Services
                 PhotoUrl = p.BlobFiles.FirstOrDefault(b => b.Status == Enums.BlobFile.BlobFileStatus.Enabled)?.Url,
                 Phone = string.IsNullOrEmpty(p.Owner.MobilePhone) ? "Não informado" : p.Owner.MobilePhone,
                 Email = p.Owner.Email,
-                Address = p.Owner.Address.City + "-" + p.Owner.Address.StateCode,
+                Address = p.Owner?.Address == null ? "Não informado" : p.Owner.Address.City + "-" + p.Owner.Address.StateCode,
                 CarModelId = p.CarModelId,
                 CarModel = p.CarModel?.Name ?? "Não especificado"
             }).OrderByDescending(p => p.CreatedOn).Take(1000).ToList();
@@ -83,7 +107,7 @@ namespace ClassicsApp.Services
             var product = new Classics.Data.Models.Product();
             product.ProductId = Guid.NewGuid();
             product.Title = newProduct.Title;
-            product.Status = (Enums.Product.ProductStatus)newProduct.StatusValue;
+            product.Status = Enums.Product.ProductStatus.PendingApproval;
             product.Description = newProduct.Description;
             product.Price = newProduct.Price;
             product.CreatedOn = DateTime.Now;
@@ -112,7 +136,8 @@ namespace ClassicsApp.Services
                 Receiver = Enums.Alert.Receiver.Client,
                 Subject = product.Title,
                 Message = alertMessage,
-                Status = Enums.Alert.AlertStatus.Available
+                Status = Enums.Alert.AlertStatus.Available,
+                CreatedOn = DateTime.Now
             };
 
             var userAlert = new Classics.Data.Models.UserAlert
@@ -140,6 +165,30 @@ namespace ClassicsApp.Services
 
             _unitOfWork.BlobFileRepository.EditAll(files);
             _unitOfWork.Commit();
+        }
+
+        public List<UserProduct> FilterProducts(Guid? modelId)
+        {
+            var products = _unitOfWork.ProductRepository.Get(p => p.CarModel.CarModelId == modelId || modelId == null).Select(p => new UserProduct
+            {
+                ProductId = p.ProductId,
+                Title = p.Title,
+                Description = p.Description,
+                ShortDescription = p.Description.Substring(0, Math.Min(p.Description.Length, 60)) +
+                (Math.Min(p.Description.Length, 60) == 60 ? "(...)" : ""),
+                Price = p.Price,
+                CreatedOn = p.CreatedOn,
+                Status = Helpers.EnumHelper.GetDescription(p.Status),
+                StatusValue = p.Status.GetHashCode(),
+                PhotoUrl = p.BlobFiles.FirstOrDefault(b => b.Status == Enums.BlobFile.BlobFileStatus.Enabled)?.Url,
+                Phone = string.IsNullOrEmpty(p.Owner.MobilePhone) ? "Não informado" : p.Owner.MobilePhone,
+                Email = p.Owner.Email,
+                Address = p.Owner?.Address == null ? "Não informado" : p.Owner.Address.City + "-" + p.Owner.Address.StateCode,
+                CarModelId = p.CarModelId,
+                CarModel = p.CarModel?.Name ?? "Não especificado"
+            }).OrderByDescending(p => p.CreatedOn).Take(1000).ToList();
+
+            return products;
         }
     }
 }
